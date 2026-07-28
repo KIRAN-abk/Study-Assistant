@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+───────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #030712;
+    color: #f9fafb;
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar        { width: 5px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { background: #1f2937; border-radius: 9999px; }
+
+  button { cursor: pointer; border: none; background: none; font: inherit; }
+  a      { color: inherit; text-decoration: none; }
+
+  /* Skip-to-main link — visible only on focus */
+  .skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    z-index: 9999;
+    padding: 10px 20px;
+    background: #7c3aed;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: 0 0 12px 12px;
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+  }
+  .skip-link:focus {
+    transform: translateX(-50%) translateY(0);
+    outline: 2px solid #a78bfa;
+    outline-offset: 2px;
+  }
+
+  /* Screen-reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Reduced-motion: disable / soften all animations
+───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fc-card {
+    transition: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Keyframes
+───────────────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ringFill {
+  from { background: conic-gradient(#7c3aed 0%, #1f2937 0); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Animation utility classes
+───────────────────────────────────────────────────────────── */
+.anim-fade-in      { animation: fadeInUp  0.4s ease forwards; }
+.anim-fade-in-d100 { animation: fadeInUp  0.4s 0.1s ease both; }
+.anim-fade-in-d200 { animation: fadeInUp  0.4s 0.2s ease both; }
+.anim-fade-in-d300 { animation: fadeInUp  0.4s 0.3s ease both; }
+
+/* Staggered tip cards */
+.anim-tip-1 { animation: fadeInUp 0.4s 0.15s ease both; }
+.anim-tip-2 { animation: fadeInUp 0.4s 0.25s ease both; }
+.anim-tip-3 { animation: fadeInUp 0.4s 0.35s ease both; }
+
+/* Panel swap — options stagger in on new question */
+.anim-slide-in     { animation: slideInRight 0.3s ease forwards; }
+.anim-scale-in     { animation: scaleIn 0.25s ease forwards; }
+
+/* Loading dots */
+.dot-1 { animation: dotPulse 1.3s ease-in-out infinite; }
+.dot-2 { animation: dotPulse 1.3s ease-in-out 0.2s infinite; }
+.dot-3 { animation: dotPulse 1.3s ease-in-out 0.4s infinite; }
+
+/* ─────────────────────────────────────────────────────────────
+   3-D Flip Card
+   (perspective / transform-style / backface-visibility have no Tailwind utility)
+───────────────────────────────────────────────────────────── */
+.fc-scene { perspective: 1200px; }
+
+.fc-card {
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fc-card.is-flipped { transform: rotateY(180deg); }
+
+.fc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.fc-face--back { transform: rotateY(180deg); }
+
+/* Focus ring visible inside the card scene */
+.fc-scene:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Quiz option — stagger animation
+───────────────────────────────────────────────────────────── */
+.quiz-opt { opacity: 0; animation: fadeInUp 0.3s ease forwards; }
+.quiz-opt:nth-child(1) { animation-delay: 0ms;  }
+.quiz-opt:nth-child(2) { animation-delay: 60ms; }
+.quiz-opt:nth-child(3) { animation-delay: 120ms;}
+.quiz-opt:nth-child(4) { animation-delay: 180ms;}
+
+/* ─────────────────────────────────────────────────────────────
+   Gradient text helper
+───────────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated gradient orb dot */
+.orb {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4, #7c3aed);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Responsive touch targets — ensure 44×44 px minimum on mobile
+───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
