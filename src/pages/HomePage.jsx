@@ -29,7 +29,7 @@ const TIPS = [
 ];
 
 const KBD_CLASS =
-  "rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 font-sans text-[10px] text-gray-500";
+  "rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 font-sans text-[10px] text-gray-500 dark:border-gray-700 dark:bg-gray-800";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -85,7 +85,7 @@ export default function HomePage({ onSuccess, isLoading = false }) {
             </span>
           </div>
 
-          <h1 className="mb-4 font-['Plus_Jakarta_Sans',sans-serif] text-[2.1rem] font-extrabold tracking-tight text-white sm:text-[3.2rem] sm:leading-[1.1]">
+          <h1 className="mb-4 font-['Plus_Jakarta_Sans',sans-serif] text-[2.1rem] font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-[3.2rem] sm:leading-[1.1]">
             Turn any topic into{" "}
             <span className="gradient-text">smart study tools</span>
           </h1>
@@ -98,18 +98,18 @@ export default function HomePage({ onSuccess, isLoading = false }) {
 
         {/* ── Input card ───────────────────────────────────── */}
         <div
-          className="overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-2xl shadow-black/50 anim-fade-in-d100"
+          className="anim-fade-in-d100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-black/5 dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/50"
           role="region"
           aria-label="Study input"
         >
           {/* Card header */}
-          <div className="flex items-center gap-2.5 border-b border-gray-800 px-4 py-3 sm:px-5 sm:py-3.5">
+          <div className="flex items-center gap-2.5 border-b border-gray-100 px-4 py-3 dark:border-gray-800 sm:px-5 sm:py-3.5">
             <span className="text-base" aria-hidden="true">📝</span>
-            <label htmlFor="study-notes" className="text-sm font-medium text-gray-400">
+            <label htmlFor="study-notes" className="text-sm font-medium text-gray-600 dark:text-gray-400">
               Your notes or topic
             </label>
             <span
-              className="ml-auto hidden items-center gap-1 text-[11px] text-gray-600 sm:flex"
+              className="ml-auto hidden items-center gap-1 text-[11px] text-gray-400 dark:text-gray-600 sm:flex"
               aria-label="Keyboard shortcut: Control Enter to generate"
             >
               <kbd className={KBD_CLASS}>Ctrl</kbd>
@@ -122,8 +122,8 @@ export default function HomePage({ onSuccess, isLoading = false }) {
           <textarea
             id="study-notes"
             ref={textareaRef}
-            className={`min-h-[200px] w-full resize-y bg-transparent px-4 py-4 text-[15px] leading-relaxed text-gray-100 placeholder:text-gray-700 focus:outline-none disabled:opacity-40 sm:min-h-52 sm:px-5 ${
-              isOverLimit ? "text-red-300" : ""
+            className={`min-h-[200px] w-full resize-y bg-transparent px-4 py-4 text-[15px] leading-relaxed text-gray-900 placeholder:text-gray-400 focus:outline-none disabled:opacity-40 dark:text-gray-100 dark:placeholder:text-gray-700 sm:min-h-52 sm:px-5 ${
+              isOverLimit ? "text-red-500 dark:text-red-300" : ""
             }`}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -139,13 +139,13 @@ export default function HomePage({ onSuccess, isLoading = false }) {
           />
 
           {/* Card footer */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-800 px-4 py-3 sm:px-5 sm:py-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800 sm:px-5 sm:py-3.5">
             <span
               id="char-count"
               aria-live={isNearLimit || isOverLimit ? "polite" : "off"}
               aria-atomic="true"
               className={`text-xs font-medium tabular-nums transition-colors ${
-                isOverLimit ? "text-red-400" : isNearLimit ? "text-amber-400" : "text-gray-600"
+                isOverLimit ? "text-red-500 dark:text-red-400" : isNearLimit ? "text-amber-500 dark:text-amber-400" : "text-gray-400 dark:text-gray-600"
               }`}
             >
               {isOverLimit
@@ -184,10 +184,10 @@ export default function HomePage({ onSuccess, isLoading = false }) {
               {TIPS.map(({ icon, title, desc, animClass }) => (
                 <div
                   key={title}
-                  className={`rounded-xl border border-gray-800 bg-gray-900/60 p-5 transition-colors hover:border-gray-700 ${animClass}`}
+                  className={`rounded-xl border border-gray-100 bg-white p-5 transition-colors hover:border-gray-200 dark:border-gray-800 dark:bg-gray-900/60 dark:hover:border-gray-700 ${animClass}`}
                 >
                   <span className="mb-3 block text-2xl" aria-hidden="true">{icon}</span>
-                  <p className="mb-1 text-sm font-semibold text-white">{title}</p>
+                  <p className="mb-1 text-sm font-semibold text-gray-900 dark:text-white">{title}</p>
                   <p className="text-xs leading-relaxed text-gray-500">{desc}</p>
                 </div>
               ))}

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ─────────────────────────────────────────────────────────────
    Base
 ───────────────────────────────────────────────────────────── */
@@ -10,8 +12,6 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #030712;
-    color: #f9fafb;
     scroll-behavior: smooth;
   }
 

@@ -23,7 +23,7 @@ export default function EmptyState({ onExampleClick }) {
         🎓
       </div>
 
-      <h2 className="mb-2 text-lg font-semibold text-white">
+      <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
         Your study session starts here
       </h2>
       <p className="mb-8 max-w-xs text-sm leading-relaxed text-gray-500">
@@ -33,7 +33,7 @@ export default function EmptyState({ onExampleClick }) {
 
       {/* Example chips */}
       <div>
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-gray-600">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-600">
           Try an example
         </p>
         <div className="flex flex-wrap justify-center gap-2">
@@ -41,7 +41,7 @@ export default function EmptyState({ onExampleClick }) {
             <button
               key={ex}
               onClick={() => onExampleClick(ex)}
-              className="rounded-full border border-gray-800 bg-gray-900 px-4 py-1.5 text-xs font-medium text-gray-400 transition-all duration-200 hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+              className="rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-medium text-gray-600 transition-all duration-200 hover:border-violet-500/40 hover:bg-violet-50 hover:text-violet-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-violet-500/10 dark:hover:text-violet-300"
             >
               {ex}
             </button>

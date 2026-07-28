@@ -8,14 +8,14 @@ const PHASE = Object.freeze({ ANSWERING: "answering", FEEDBACK: "feedback", DONE
 const OPTION_LABELS = ["A", "B", "C", "D", "E", "F"];
 
 // Shared kbd styling — avoids repeating the same string 4 times
-const KBD_CLASS = "rounded border border-gray-700 bg-gray-800 px-1 py-0.5 font-sans text-[10px]";
+const KBD_CLASS = "rounded border border-gray-200 bg-gray-50 px-1 py-0.5 font-sans text-[10px] dark:border-gray-700 dark:bg-gray-800";
 
 // Shared button base classes for primary/ghost score-screen actions
 const BTN_PRIMARY =
-  "touch-target inline-flex items-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:bg-violet-500 hover:-translate-y-px active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950";
+  "touch-target inline-flex items-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:bg-violet-500 hover:-translate-y-px active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950";
 
 const BTN_GHOST =
-  "touch-target inline-flex items-center gap-2 rounded-full border border-gray-700 bg-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-400 transition-all hover:border-gray-600 hover:text-white hover:-translate-y-px active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950";
+  "touch-target inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-600 transition-all hover:border-gray-300 hover:text-gray-900 hover:-translate-y-px active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-white dark:focus-visible:ring-offset-gray-950";
 
 // Score messages keyed by percentage threshold — pure lookup, no function needed
 const SCORE_MESSAGES = [
@@ -37,7 +37,7 @@ function ProgressBar({ current, total }) {
   const pct = Math.round((current / total) * 100);
   return (
     <div
-      className="mb-6 h-1 w-full overflow-hidden rounded-full bg-gray-800"
+      className="mb-6 h-1 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800"
       role="progressbar"
       aria-valuenow={current}
       aria-valuemin={0}
@@ -59,14 +59,14 @@ function ProgressBar({ current, total }) {
  */
 function OptionButton({ label, text, onClick, disabled, state }) {
   const OPTION_CLASSES = {
-    idle:     "border-gray-800 bg-gray-900 text-gray-300 hover:border-violet-500/40 hover:bg-violet-500/5 hover:translate-x-0.5 cursor-pointer",
+    idle:     "border-gray-200 bg-white text-gray-700 hover:border-violet-500/40 hover:bg-violet-50/50 hover:translate-x-0.5 cursor-pointer dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-violet-500/5",
     selected: "border-violet-500 bg-violet-500/10 text-violet-300",
     correct:  "border-green-500/50 bg-green-500/10 text-green-400 cursor-default",
     wrong:    "border-red-500/50 bg-red-500/10 text-red-400 cursor-default",
   };
 
   const MARKER_CLASSES = {
-    idle:     "border-gray-700 text-gray-500",
+    idle:     "border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500",
     selected: "border-violet-500 text-violet-400",
     correct:  "border-green-500 bg-green-500/20 text-green-400",
     wrong:    "border-red-500 bg-red-500/20 text-red-400",
@@ -148,15 +148,15 @@ function ScoreScreen({ correct, total, wrongCount, onRetryWrong, onRestart }) {
         aria-label={`Score: ${correct} out of ${total} — ${pct}%`}
         role="img"
       >
-        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-gray-950">
-          <span className="font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-extrabold text-white">
+        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-white dark:bg-gray-950">
+          <span className="font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-extrabold text-gray-900 dark:text-white">
             {correct}
           </span>
           <span className="text-sm text-gray-500">/ {total}</span>
         </div>
       </div>
 
-      <h3 className="mb-2 font-['Plus_Jakarta_Sans',sans-serif] text-2xl font-bold text-white">
+      <h3 className="mb-2 font-['Plus_Jakarta_Sans',sans-serif] text-2xl font-bold text-gray-900 dark:text-white">
         Quiz Complete!
       </h3>
       <p className="mb-8 max-w-xs text-sm leading-relaxed text-gray-500">
@@ -278,7 +278,7 @@ export default function Quiz({ questions }) {
     return (
       <section className="anim-fade-in" aria-label="Quiz results">
         <SectionHeader title="Quiz" icon="🧠" />
-        <div className="overflow-hidden rounded-2xl border border-gray-800 bg-gray-900">
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
           <ScoreScreen
             correct={correctCount}
             total={activeQuestions.length}
@@ -317,18 +317,18 @@ export default function Quiz({ questions }) {
         <span className="text-xs font-medium text-gray-500">
           Question {qIndex + 1} of {activeQuestions.length}
         </span>
-        <span className="text-xs text-gray-600">
+        <span className="text-xs text-gray-500 dark:text-gray-600">
           {Math.round((answeredCount / activeQuestions.length) * 100)}%
         </span>
       </div>
       <ProgressBar current={answeredCount} total={activeQuestions.length} />
 
       {/* Question card */}
-      <div className="mb-5 rounded-2xl border border-gray-800 bg-gray-900 px-5 py-5 sm:px-6">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-violet-400/70">
+      <div className="mb-5 rounded-2xl border border-gray-200 bg-white px-5 py-5 dark:border-gray-800 dark:bg-gray-900 sm:px-6">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-violet-600/70 dark:text-violet-400/70">
           Question {qIndex + 1}
         </p>
-        <p className="text-base font-semibold leading-relaxed text-white sm:text-lg" id="quiz-question">
+        <p className="text-base font-semibold leading-relaxed text-gray-900 dark:text-white sm:text-lg" id="quiz-question">
           {current.question}
         </p>
       </div>
@@ -370,7 +370,7 @@ export default function Quiz({ questions }) {
             <Feedback isCorrect={isCorrect} correctText={current.options[current.correctAnswer]} />
           </div>
           <div className="flex items-center justify-between gap-3">
-            <p className="hidden text-xs text-gray-600 sm:block" aria-hidden="true">
+            <p className="hidden text-xs text-gray-500 dark:text-gray-600 sm:block" aria-hidden="true">
               Press <kbd className={KBD_CLASS}>Enter</kbd> to continue
             </p>
             <button onClick={handleNext} className={`ml-auto ${BTN_PRIMARY}`}>
@@ -392,7 +392,7 @@ function SectionHeader({ icon, title }) {
       <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-lg" aria-hidden="true">
         {icon}
       </div>
-      <h2 className="text-lg font-bold text-white">{title}</h2>
+      <h2 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h2>
     </div>
   );
 }

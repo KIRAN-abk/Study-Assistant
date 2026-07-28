@@ -2,10 +2,9 @@ import { useState, useCallback, useRef, useEffect } from "react";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const KBD_CLASS = "rounded border border-gray-700 bg-gray-800 px-1 py-0.5 font-sans text-[10px]";
+const KBD_CLASS = "rounded border border-gray-200 bg-gray-50 px-1 py-0.5 font-sans text-[10px] dark:border-gray-700 dark:bg-gray-800";
 
-const NAV_BTN_CLASS =
-  "touch-target flex h-11 w-11 items-center justify-center rounded-full border border-gray-800 bg-gray-900 text-gray-400 text-xl transition-all hover:border-gray-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500";
+  "touch-target flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 text-xl transition-all hover:border-gray-300 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-600 dark:hover:text-white";
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
 
@@ -66,17 +65,17 @@ function FlipCard({ question, answer, onPrev, onNext, hasPrev, hasNext }) {
     >
       <div className={`fc-card relative h-full w-full rounded-2xl ${flipped ? "is-flipped" : ""}`}>
         {/* Front */}
-        <div className="fc-face flex flex-col items-center justify-center rounded-2xl border border-gray-800 bg-gray-900 px-6 py-10 text-center sm:px-8">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-gray-600">Question</p>
-          <p className="text-base font-semibold leading-relaxed text-white sm:text-xl">{question}</p>
-          <p className="mt-6 text-xs text-gray-600" aria-hidden="true">↩ Space / Enter to flip</p>
+        <div className="fc-face flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center dark:border-gray-800 dark:bg-gray-900 sm:px-8">
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-600">Question</p>
+          <p className="text-base font-semibold leading-relaxed text-gray-900 dark:text-white sm:text-xl">{question}</p>
+          <p className="mt-6 text-xs text-gray-400 dark:text-gray-600" aria-hidden="true">↩ Space / Enter to flip</p>
         </div>
 
         {/* Back */}
         <div className="fc-face fc-face--back flex flex-col items-center justify-center rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-500/10 to-cyan-500/5 px-6 py-10 text-center sm:px-8">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-violet-400/60">Answer</p>
-          <p className="text-base font-medium leading-relaxed text-gray-200 sm:text-lg">{answer}</p>
-          <p className="mt-6 text-xs text-gray-600" aria-hidden="true">↩ Space / Enter to flip back</p>
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-violet-600/70 dark:text-violet-400/60">Answer</p>
+          <p className="text-base font-medium leading-relaxed text-gray-800 dark:text-gray-200 sm:text-lg">{answer}</p>
+          <p className="mt-6 text-xs text-gray-400 dark:text-gray-600" aria-hidden="true">↩ Space / Enter to flip back</p>
         </div>
       </div>
     </div>
@@ -126,8 +125,8 @@ function DotTablist({ count, currentIndex, onSelect }) {
         <button
           key={i}
           tabIndex={i === currentIndex ? 0 : -1}
-          className={`h-2.5 w-2.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-1 focus-visible:ring-offset-gray-950 ${
-            i === currentIndex ? "scale-125 bg-violet-500" : "bg-gray-700 hover:bg-gray-500"
+          className={`h-2.5 w-2.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-1 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950 ${
+            i === currentIndex ? "scale-125 bg-violet-600 dark:bg-violet-500" : "bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-500"
           }`}
           onClick={() => onSelect(i)}
           role="tab"
@@ -188,20 +187,20 @@ export default function Flashcards({ cards }) {
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-lg" aria-hidden="true">
             🃏
           </div>
-          <h2 className="text-lg font-bold text-white">Flashcards</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Flashcards</h2>
         </div>
 
         <div className="flex items-center gap-3">
           <span className="text-sm text-gray-500" aria-hidden="true">
             {index + 1} / {cards.length}
           </span>
-          <span className="hidden items-center gap-1 text-xs text-gray-600 sm:flex" aria-hidden="true">
+          <span className="hidden items-center gap-1 text-xs text-gray-500 dark:text-gray-600 sm:flex" aria-hidden="true">
             <kbd className={KBD_CLASS}>←</kbd>
             <kbd className={KBD_CLASS}>→</kbd>
             navigate
           </span>
           <button
-            className="touch-target inline-flex items-center gap-1.5 rounded-full border border-gray-800 bg-gray-900 px-3.5 py-1.5 text-xs font-semibold text-gray-400 transition-all hover:border-gray-700 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+            className="touch-target inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-600 transition-all hover:border-gray-300 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:text-white"
             onClick={restart}
             aria-label="Restart flashcards from the beginning"
           >

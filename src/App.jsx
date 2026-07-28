@@ -20,6 +20,30 @@ export default function App() {
   const [error, setError] = useState(null);
   const [notes, setNotes] = useState("");
 
+  // Theme management: default to dark if no preference, or respect localStorage/system
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      if (saved) return saved;
+      if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+    }
+    return "dark"; // Default to dark for the "SaaS product" aesthetic
+  });
+
+  // Apply theme to document root and persist it
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
+
   const abortRef = useRef(null);
 
   const handleGenerate = useCallback(async (inputNotes) => {
@@ -61,13 +85,13 @@ export default function App() {
   }, [notes, handleGenerate]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100">
       {/* Skip-to-content link — only visible on :focus */}
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
-      <Navbar />
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
 
       {(view === "home" || view === "loading" || view === "error") && (
         <HomeWithState
@@ -107,7 +131,7 @@ function LoadingOverlay() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-gray-950/85 backdrop-blur-sm anim-fade-in"
+      className="anim-fade-in fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-white/85 backdrop-blur-sm dark:bg-gray-950/85"
       role="dialog"
       aria-modal="true"
       aria-live="assertive"
@@ -127,14 +151,14 @@ function LoadingOverlay() {
       </div>
 
       <div className="text-center">
-        <p className="mb-1 font-semibold text-white">Generating your study set…</p>
+        <p className="mb-1 font-semibold text-gray-900 dark:text-white">Generating your study set…</p>
         {/* Animated dots give a visual heartbeat */}
-        <p className="flex items-center justify-center gap-1.5 text-sm text-gray-500" aria-hidden="true">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-500 dot-1" />
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-500 dot-2" />
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-500 dot-3" />
+        <p className="flex items-center justify-center gap-1.5 text-sm text-gray-400 dark:text-gray-500" aria-hidden="true">
+          <span className="dot-1 inline-block h-1.5 w-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
+          <span className="dot-2 inline-block h-1.5 w-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
+          <span className="dot-3 inline-block h-1.5 w-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
         </p>
-        <p className="mt-2 text-xs text-gray-600">This usually takes a few seconds</p>
+        <p className="mt-2 text-xs text-gray-500 dark:text-gray-600">This usually takes a few seconds</p>
       </div>
     </div>
   );
@@ -155,21 +179,21 @@ function ErrorToast({ error, onRetry }) {
 
   return (
     <div
-      className="fixed bottom-6 left-1/2 z-50 flex w-[min(92vw,480px)] -translate-x-1/2 items-start gap-3 rounded-2xl border border-red-500/20 bg-gray-900 px-5 py-4 shadow-2xl shadow-black/60 anim-fade-in"
+      className="anim-fade-in fixed bottom-6 left-1/2 z-50 flex w-[min(92vw,480px)] -translate-x-1/2 items-start gap-3 rounded-2xl border border-red-500/20 bg-white px-5 py-4 shadow-2xl shadow-black/10 dark:bg-gray-900 dark:shadow-black/60"
       role="alertdialog"
       aria-live="assertive"
       aria-atomic="true"
       onKeyDown={handleKey}
     >
       <span className="mt-0.5 flex-shrink-0 text-lg text-red-400" aria-hidden="true">⚠</span>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-red-400">Generation failed</p>
-        <p className="mt-0.5 text-xs leading-relaxed text-red-400/75">{error}</p>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-red-600 dark:text-red-400">Generation failed</p>
+        <p className="mt-0.5 text-xs leading-relaxed text-red-600/75 dark:text-red-400/75">{error}</p>
       </div>
       <button
         ref={retryRef}
         onClick={onRetry}
-        className="flex-shrink-0 rounded-lg border border-red-500/25 px-3 py-1.5 text-xs font-semibold text-red-400 transition-colors hover:bg-red-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 touch-target"
+        className="touch-target flex-shrink-0 rounded-lg border border-red-500/25 px-3 py-1.5 text-xs font-semibold text-red-600 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 dark:text-red-400 dark:hover:bg-red-500/10"
       >
         Retry
       </button>
