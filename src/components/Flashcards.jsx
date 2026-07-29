@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 
 const KBD_CLASS = "rounded border border-gray-200 bg-gray-50 px-1 py-0.5 font-sans text-[10px] dark:border-gray-700 dark:bg-gray-800";
 
+const NAV_BTN_CLASS =
   "touch-target flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 text-xl transition-all hover:border-gray-300 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-600 dark:hover:text-white";
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
